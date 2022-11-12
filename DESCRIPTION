@@ -15,7 +15,10 @@ Suggests:
     usethis
 Imports: 
     cowplot,
+    devtools,
     dplyr,
     ggvenn,
     markdown,
+    rmdformats,
     Seurat
+RoxygenNote: 7.2.2
