@@ -97,7 +97,8 @@ ppDEGs <- ppDEGs_DB$at_root_denyer_2019
 ### Module two: Evaluation
 
 This step may cost several minutes, and a ***ppEffect Report*** will be
-produced.
+produced. (Sorry about that, but github can’t show files that are this
+big right now. Please download the file to open it.)
 
 ``` r
 eval_ppEffect(object = data_obj, 
