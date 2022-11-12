@@ -8,19 +8,17 @@
 #' @param marker_genes a data.frame about marker_genes,
 #' We recommend you produce it from the seurat function "FindAllMarkers"
 #' @param report_dir  the path to output the ppEffect Report.
-#' @param ...
+#' @param ... Other arguments passed on to methods. Not currently used.
 #'
 #' @return The ppEffect Report using html format
 #' @export
 #'
 #' @examples
-#' library(ppEffect)
-#' eval_ppEffect(
-#'   object = data_obj,
-#'   ppDEGs = ppDEGs,
-#'   marker_genes = Markers,
-#'   report_dir = "./ppEffect_eval_report-example.html"
-#' )
+#' # library(ppEffect)
+#' # eval_ppEffect(  object = data_obj,
+#' #                 ppDEGs = ppDEGs,
+#' #                 marker_genes = Markers,
+#' #                 report_dir = "./ppEffect_eval_report-example.html")
 #'
 eval_ppEffect <- function(object, ppDEGs, group.by = "seurat_clusters", marker_genes, report_dir = "./ppEffect_report.html", ...) {
   object <- Seurat::AddModuleScore(object = object, features = list(ppDEGs), name = "ppDEGs")

@@ -1,24 +1,25 @@
 Package: ppEffect
 Type: Package
-Title: What the Package Does (Title Case)
+Title: A R package help your to quickly evaluate protoplasting effects in scRNA seq data
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R:
+    person(given = "Jie",
+           family = "Yao",
+           role =c("aut", "cre", "cph"), 
+           email = "andy-yaoj@zju.edu.cn")
+Maintainer: Yao Jie <andy-yaoj@zju.edu.cn>
+Description: A R package help your to quickly evaluate protoplasting effects in scRNA seq dataset. 
+  We provied gene sets induced be protoplasting effect, and gave you a report about how did the protoplasting 
+  affects your scRNA-seq datasets.Moreover, we supported several ways to correct ppEffect.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
+    covr,
     renv,
     testthat,
     usethis
 Imports: 
-    cowplot,
     devtools,
-    dplyr,
-    ggvenn,
-    markdown,
-    rmdformats,
-    Seurat
+    rmdformats
 RoxygenNote: 7.2.2

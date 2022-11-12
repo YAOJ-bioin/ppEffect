@@ -14,17 +14,20 @@ eval_ppEffect(
 )
 }
 \arguments{
-\item{object}{A seruat object, which have been pre-processed (after normalization, dimension reduction, and marker gene identification).}
+\item{object}{A seruat object, which have been pre-processed
+(after normalization, dimension reduction, and marker gene identification).}
 
-\item{ppDEGs}{a vector of protoplasting induced genes. You can obtain the dataset from ppDEGs_DB or input your own geneList.}
+\item{ppDEGs}{a vector of protoplasting induced genes.
+You can obtain the dataset from ppDEGs_DB or input your own geneList.}
 
 \item{group.by}{a slot to group cells. The default is "suerat_clusters".}
 
-\item{marker_genes}{a data.frame about marker_genes, We recommend you produce it from the seurat function "FindAllMarkers"}
+\item{marker_genes}{a data.frame about marker_genes,
+We recommend you produce it from the seurat function "FindAllMarkers"}
 
 \item{report_dir}{the path to output the ppEffect Report.}
 
-\item{...}{}
+\item{...}{Other arguments passed on to methods. Not currently used.}
 }
 \value{
 The ppEffect Report using html format
@@ -33,10 +36,10 @@ The ppEffect Report using html format
 Evaluate ppEffect in scRNA-seq dataset
 }
 \examples{
-library(ppEffect)
-eval_ppEffect(object = data_obj,
-              ppDEGs = ppDEGs,
-              marker_genes =Markers,
-              report_dir = "./ppEffect_eval_report-example.html")
+# library(ppEffect)
+# eval_ppEffect(  object = data_obj,
+#                 ppDEGs = ppDEGs,
+#                 marker_genes = Markers,
+#                 report_dir = "./ppEffect_eval_report-example.html")
 
 }

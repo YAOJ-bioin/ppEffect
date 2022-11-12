@@ -4,6 +4,10 @@
 # ppEffect
 
 <!-- badges: start -->
+
+[![Codecov test
+coverage](https://codecov.io/gh/YAOJ-bioin/ppEffect/branch/master/graph/badge.svg)](https://app.codecov.io/gh/YAOJ-bioin/ppEffect?branch=master)
+[![R-CMD-check](https://github.com/YAOJ-bioin/ppEffect/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/YAOJ-bioin/ppEffect/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of **ppEffect** is to systematically evaluate protoplasting
@@ -27,7 +31,8 @@ This is a basic example which shows you how to use this package:
 
 ``` r
 library(ppEffect)
-
+library(rmarkdown)
+library(markdown)
 library(Seurat)
 library(dplyr)
 library(cowplot)
