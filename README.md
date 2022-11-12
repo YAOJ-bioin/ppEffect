@@ -107,7 +107,7 @@ eval_ppEffect(object = data_obj,
 ```
 
 An example report can be obtained here:
-[ppEffect\_eval\_report-example](F:/Learn_Create_R_package/ppEffect_eval_report-example.html)
+[ppEffect\_eval\_report-example](./man/ppEffect_eval_report-example.html)
 
 ![](man/figures/README_ppEffect_Report_example.png "ppEffect Report")
 
