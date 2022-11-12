@@ -104,7 +104,7 @@ ppDEGs <- ppDEGs_DB$at_root_denyer_2019
 
 ### Module two: Evaluation
 
-This step may cost several minutes, and a ***ppEffect Report*** will be produced. (Sorry about that, but github can’t show files that are this big right now. Please download the file to open it.)
+This step may cost several minutes, and a ***ppEffect Report*** will be produced. 
 
 ```{r evaluate}
 eval_ppEffect(object = data_obj, 
@@ -113,7 +113,7 @@ eval_ppEffect(object = data_obj,
               report_dir = "./ppEffect_eval_report-example.html")
 ```
 
-An example report can be obtained here: [ppEffect_eval_report-example](./man/ppEffect_eval_report-example.html)
+An example report can be obtained here: [ppEffect_eval_report-example](./man/ppEffect_eval_report-example.html) (Sorry about that, but github can’t show files that are this big right now. Please download the file to open it.)
 
 ![](man/figures/README_ppEffect_Report_example.png "ppEffect Report")
 
