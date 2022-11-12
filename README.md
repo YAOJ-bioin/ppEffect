@@ -48,7 +48,7 @@ data_obj <- readRDS("../data_dir/GSE123818_at_root_anno_simple.rds")
 # raw.data <- Read10X(data.dir = "./data/filtered_gene_bc_matrices/GSE123818_at_root_anno/")
 ## Initialize the Seurat object with the raw (non-normalized data).
 # data_obj<- CreateSeuratObject(counts = raw.data, project = "at_root", min.cells = 3, min.features = 200)
-# data_obj 
+# data_obj
 ```
 
 ### Standard pre-processing workflow
@@ -59,11 +59,11 @@ The pre-processing workflow is as same as the basic pipeline on
 ``` r
 data_obj <- SCTransform(data_obj, verbose = FALSE)
 
-data_obj <- RunPCA(data_obj, verbose = FALSE, approx = FALSE, npcs = 10,seed.use = NULL)
+data_obj <- RunPCA(data_obj, verbose = FALSE, approx = FALSE, npcs = 10, seed.use = NULL)
 data_obj <- RunUMAP(data_obj, dims = 1:10)
 data_obj <- RunTSNE(data_obj, dims = 1:10)
-data_obj <- FindNeighbors(data_obj, reduction = "pca",dims = 1:10)
-data_obj <- FindClusters(data_obj,resolution =0.8)
+data_obj <- FindNeighbors(data_obj, reduction = "pca", dims = 1:10)
+data_obj <- FindClusters(data_obj, resolution = 0.8)
 
 ## Find marker genes is necessary, we require to submit the data.frame of marker genes in the module of evaluation.
 Markers <- FindAllMarkers(data_obj)
@@ -87,7 +87,7 @@ several Method to help your correct the ppEffects in your datasets.
 ### Module one: Data
 
 ``` r
-# Check the informations of ppDEGs_DB, and confirm which ppDEGs dataset your will choose. 
+# Check the informations of ppDEGs_DB, and confirm which ppDEGs dataset your will choose.
 ppDEGs_DB@informations
 
 # Select or provide a vector about ppDEGs
@@ -100,16 +100,18 @@ This step may cost several minutes, and a ***ppEffect Report*** will be
 produced.
 
 ``` r
-eval_ppEffect(object = data_obj, 
-              ppDEGs = ppDEGs,
-              marker_genes =Markers,
-              report_dir = "./ppEffect_eval_report-example.html")
+eval_ppEffect(
+  object = data_obj,
+  ppDEGs = ppDEGs,
+  marker_genes = Markers,
+  report_dir = "./ppEffect_eval_report-example.html"
+)
 ```
 
 An example report can be obtained here:
 [ppEffect\_eval\_report-example](./man/ppEffect_eval_report-example.html)
-(Sorry about that, but github can’t show files that are this big right
-now. Please download the file to open it.)
+(Maybe github can’t show files that are this big right now. Please
+download the file to open it.)
 
 ![](man/figures/README_ppEffect_Report_example.png "ppEffect Report")
 
@@ -121,6 +123,6 @@ Here we provided different methods to help your correct the ppEffect.
 You can choose the optimal one depends on your data specificity.
 
 ``` r
-## return a new seurat_object after ppEffect correction. 
+## return a new seurat_object after ppEffect correction.
 object_corr <- corr_ppEffect(object = object, method = "regress.out.ppDEGs")
 ```
