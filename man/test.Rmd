@@ -132,7 +132,7 @@ ggplotly(p)
 This panel display the intersection between ppDEGs and marker genes cluster by cluster. Marker gene list were pro 
 ```{r echo=FALSE, fig.height=7, fig.width=8, warning=FALSE,dev='svg'}
 
-if (exists("marker_genes")){
+if (!exists("marker_genes")){
   print("Please provide a data.frame from the parameter'marker_genes', you can produce it by the function FindAllMarkers!")
 }else {
   plot_list =list()
