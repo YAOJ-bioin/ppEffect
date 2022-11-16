@@ -34,6 +34,12 @@ eval_ppEffect <- function(object, ppDEGs, group.by = "seurat_clusters", marker_g
   ))
 
   # print(plot1+plot2)
+  if(!file.exists("C:/tmp/test.rmd")){
+    download.file(
+      url="https://gitee.com/YAOJ-bioin/pp-effect/blob/master/test.Rmd",
+      destfile = "C:/tmp/test.Rmd"
+    )
+  }
 
-  rmarkdown::render(input = "./man/test.Rmd", output_file = report_dir, encoding = "UTF-8")
+  rmarkdown::render(input = "C:/tmp/test.Rmd", output_file = report_dir, encoding = "UTF-8")
 }
