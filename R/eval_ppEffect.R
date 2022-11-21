@@ -23,6 +23,10 @@
 eval_ppEffect <- function(object, ppDEGs, group.by = "seurat_clusters", marker_genes, report_dir = "./ppEffect_report.html", ...) {
   object <- Seurat::AddModuleScore(object = object, features = list(ppDEGs), name = "ppDEGs")
   object@meta.data$ppDEGs <- object@meta.data$ppDEGs1
+
+  object$ppDEGs1 <- NULL
+  return(object)
+
   featurePlotCols <- c(
     "lightgrey", "lightgrey", "lightgrey", "#ffffcc", "#ffeda0", "#fed976",
     "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026", "#800026"
@@ -34,12 +38,13 @@ eval_ppEffect <- function(object, ppDEGs, group.by = "seurat_clusters", marker_g
   ))
 
   # print(plot1+plot2)
-  if(!file.exists("C:/tmp/test.rmd")){
-    download.file(
-      url="https://gitee.com/YAOJ-bioin/pp-effect/raw/master/test.Rmd",
-      destfile = "C:/tmp/test.Rmd"
-    )
-  }
+  # if(!file.exists("C:/tmp/test.rmd")){
+  #   download.file(
+  #     url="https://gitee.com/YAOJ-bioin/pp-effect/raw/master/test.Rmd",
+  #     destfile = "C:/tmp/test.Rmd"
+  #   )
+  # }
+  input_file <- system.file("rmd", "test.Rmd", package = "ppEffect")
 
-  rmarkdown::render(input = "C:/tmp/test.Rmd", output_file = report_dir, encoding = "UTF-8")
+  rmarkdown::render(input = input_file, output_file = report_dir, encoding = "UTF-8")
 }

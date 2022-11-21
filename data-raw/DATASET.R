@@ -105,7 +105,7 @@ data_obj <- RunTSNE(data_obj, dims = 1:10)
 data_obj <- FindNeighbors(data_obj, reduction = "pca",dims = 1:10)
 data_obj <- FindClusters(data_obj,resolution =0.8)
 
-Markers <- FindAllMarkers(data_obj,logfc.threshold = 2,)
+Markers <- FindAllMarkers(data_obj,logfc.threshold = 2)
 
 ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01")
 

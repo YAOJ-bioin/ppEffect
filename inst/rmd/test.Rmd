@@ -1,0 +1,153 @@
+---
+title: "ppEffect Report"
+author: "YAOJ"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: false
+    lightbox: true
+    gallery: true 
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(Seurat)
+library(cowplot)
+library(dplyr)
+library(plotly)
+library(ggvenn)
+
+```
+
+# Overview of the dataset
+```{r echo=FALSE}
+ppGroup_Q2 <- object@meta.data %>% select(group.by,ppDEGs) %>% group_by(get(group.by)) %>% 
+  summarize(group.by, median = median(ppDEGs)) %>% filter(median>=median(object$ppDEGs)) %>% as.data.frame() 
+ppGroup_Q2 <- droplevels ( ppGroup_Q2$`get(group.by)`)
+
+ppGroup_Q3 <- object@meta.data %>% select(group.by,ppDEGs) %>% group_by(get(group.by)) %>% 
+  summarize(group.by, median = median(ppDEGs)) %>% filter(median>=quantile(object$ppDEGs,0.75)) %>% as.data.frame() 
+ppGroup_Q3 <- droplevels ( ppGroup_Q3$`get(group.by)`)
+```
+
++-------------------------+---------------------------------+
+|  Attribute              |     Content                     | 
++=========================+=================================+
+|  Object name            | `r object@project.name`         |
++-------------------------+---------------------------------+
+|  Cell number            | `r length(colnames(object))`    |
++-------------------------+---------------------------------+
+|  Gene number            | `r length(rownames(object))`    |
++-------------------------+---------------------------------+
+|  Active assay           | `r object@active.assay`         |
++-------------------------+---------------------------------+
+|  Reductions             | `r names(object@reductions)`    |
++-------------------------+---------------------------------+
+|pp.Score (Q2)            | `r median(object$ppDEGs)`       |
++-------------------------+---------------------------------+
+|ppGroups in terms of Q2  | `r paste(ppGroup_Q2,' ')`       |
++-------------------------+---------------------------------+
+|pp.Score (Q3)            | `r quantile(object$ppDEGs,0.75)`|
++-------------------------+---------------------------------+
+|ppGroups in terms of Q3  | `r paste(ppGroup_Q3,' ')`       |
++-------------------------+---------------------------------+
+
+
+> **Gene number**: representing the gene numbers in the activate assay.
+> 
+> **Reductions**: representing the dimension reduction methods conducted in this dataset.
+> 
+> **pp.Score (Q2)** : representing the median expression value of enzymolysis induced genes (ppDEGs).
+> 
+> **ppGroups in terms of Q2** : calculating the median of pp.Score in each cell group, then to figure out which clusters have higher pp.Scores than the pp.Score (Q2).
+> 
+> **pp.Score (Q3)** : representing The third quartile(Q3), also known as the higher quartile, is equal to the 75% of all the values in the sample arranged from the smallest to the largest of enzymolysis induced genes (ppDEGs).
+> 
+> **ppGroups in terms of Q3** : calculating the median of pp.Score in each cell group, then to figure out which clusters have higher pp.Scores than the pp.Score (Q3).
+
+
+# Overlap between ppDEGs and HVGs
+
+In this dataset, we totally have <span style="text-decoration: underline;background-color:yellow;">`r length(VariableFeatures(object = object))`</span> highly variable genes (HVGs),
+and the number of ppDEGs is <span style="text-decoration: underline;background-color:yellow;">`r length(ppDEGs)`</span>. 
+The intersection between these two sets were <span style="text-decoration: underline;background-color:yellow;">`r length(intersect(VariableFeatures(object = object),ppDEGs ))`</span>  (genes),
+which means that  <span style="text-decoration: underline;background-color:yellow;">  `r paste0(round(length(intersect(VariableFeatures(object = object),ppDEGs ))*100/(length(ppDEGs)),2),"%")`</span> ppDEGs belong to HVGs. All the HVGs will be used for PCA analysis following up. 
+
+
+```{r echo=FALSE, warning=TRUE}
+if (length(VariableFeatures(object = object))<=100){
+  print("please re-run the funtion FindVariableFeatures on your object first")
+} else {
+  HVGs <-VariableFeatures(object = object)
+  plot <- ggvenn(list("HVGs" = HVGs, "ppDEGs"= ppDEGs), c("HVGs","ppDEGs"),fill_alpha =0.3, fill_color = selCols[1:2])
+  ggplotly(plot)
+}
+
+```
+
+
+
+
+# The extent of ppEffects in each cell
+In this panel, your can see the distribution of ppEffects in each cells by UMAP plot. The darker the cell color, the more severely it is affected by enzymatic hydrolysis
+
+
+```{r tsne, echo=F, fig.height=10, fig.width=12, warning=F, dev='svg'}
+plot1 <- Seurat::FeaturePlot(object = object, features = "ppDEGs",cols =featurePlotCols,pt.size = 0.8 )
+plot2 <- Seurat::DimPlot(object= object, group.by = group.by, cols = selCols,reduction = "umap",pt.size = 0.8 )
+plot3 <- Seurat::FeaturePlot(object = object, reduction = "tsne",features = "ppDEGs",cols =featurePlotCols,pt.size = 0.8)
+plot4 <- Seurat::DimPlot(object= object, group.by = group.by, cols = selCols,reduction = "tsne",pt.size = 0.8)
+
+cowplot::plot_grid(plot1, plot2 ,plot3,plot4 ,ncol = 2)
+```
+
+# Groups affected by ppEffect 
+
+In this panel, we use the violin plot to  display which groups were highly affected by ppEffect.
+
+>The ***red dotted line*** presented the median expression value of enzymolysis induced genes (ppDEGs). The median expression value of ppDEGs (pp.Score Q2) ***in this dataset*** is <span style="text-decoration: underline;background-color:yellow;"> `r median(object$ppDEGs)`</span> .
+>
+>The ***yellow dotted line*** presented the higher quartile expression value of enzymolysis induced genes (ppDEGs). The higher quartile expression value of ppDEGs (pp.Score Q3) ***in this dataset*** is <span style="text-decoration: underline;background-color:yellow;">`r quantile(object$ppDEGs,0.75)`</span> .
+
+```{r VlnPlot, echo=FALSE,fig.align="center", fig.height=4, fig.width=8,dev='svg'}
+p <- VlnPlot(object,features = "ppDEGs",cols = selCols)+
+  geom_hline(aes(yintercept= median(object$ppDEGs)),colour ="#990000", linetype ="dashed",size = 1)+
+  geom_hline(aes(yintercept= quantile(object$ppDEGs,0.75)),colour ="yellow", linetype ="dashed",size = 1)
+ ggplotly(p) 
+```
+
+
+In this panel, we use the Dotplot to display which groups were highly affected by ppEffect. 
+
+```{r Dotplot, echo=FALSE,fig.align="center", fig.height=3, fig.width=8,dev='svg'}
+p <- DotPlot(object,features = "ppDEGs",cols = "RdGy")+coord_flip()
+ggplotly(p)
+```
+
+
+# Overlap between ppDEGs and cluster markers
+
+This panel display the intersection between ppDEGs and marker genes cluster by cluster. Marker gene list were pro 
+```{r echo=FALSE, fig.height=7, fig.width=8, warning=FALSE,dev='svg'}
+
+if (!exists("marker_genes")){
+  print("Please provide a data.frame from the parameter'marker_genes', you can produce it by the function FindAllMarkers!")
+}else {
+  plot_list =list()
+for (i in 0: (length(unique(marker_genes$cluster))-1)){
+  Markers =filter(marker_genes, cluster==i)[["gene"]]
+  cluster_name = paste0("C",i)
+  plot_list[[cluster_name]] <- ggvenn(list("markers" = Markers, "ppDEGs"= ppDEGs), c("markers","ppDEGs"),fill_alpha =0.3, fill_color = c("#DCB717","#E2272E"),set_name_size=3,show_percentage=F)+ggtitle(cluster_name) 
+}
+
+plot_grid( plotlist = plot_list,ncol = 5)
+}
+
+```
+
+
+
+
+
