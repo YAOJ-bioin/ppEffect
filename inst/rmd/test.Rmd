@@ -130,7 +130,7 @@ ggplotly(p)
 # Overlap between ppDEGs and cluster markers
 
 This panel display the intersection between ppDEGs and marker genes cluster by cluster. Marker gene list were pro 
-```{r echo=FALSE, fig.height=7, fig.width=8, warning=FALSE,dev='svg'}
+```{r echo=FALSE, fig.height=9, fig.width=8, warning=FALSE,dev='svg'}
 
 if (!exists("marker_genes")){
   print("Please provide a data.frame from the parameter'marker_genes', you can produce it by the function FindAllMarkers!")
@@ -142,7 +142,7 @@ for (i in 0: (length(unique(marker_genes$cluster))-1)){
   plot_list[[cluster_name]] <- ggvenn(list("markers" = Markers, "ppDEGs"= ppDEGs), c("markers","ppDEGs"),fill_alpha =0.3, fill_color = c("#DCB717","#E2272E"),set_name_size=3,show_percentage=F)+ggtitle(cluster_name) 
 }
 
-plot_grid( plotlist = plot_list,ncol = 5)
+plot_grid( plotlist = plot_list,ncol = 4)
 }
 
 ```
