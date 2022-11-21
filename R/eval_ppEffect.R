@@ -24,9 +24,6 @@ eval_ppEffect <- function(object, ppDEGs, group.by = "seurat_clusters", marker_g
   object <- Seurat::AddModuleScore(object = object, features = list(ppDEGs), name = "ppDEGs")
   object@meta.data$ppDEGs <- object@meta.data$ppDEGs1
 
-  object$ppDEGs1 <- NULL
-  return(object)
-
   featurePlotCols <- c(
     "lightgrey", "lightgrey", "lightgrey", "#ffffcc", "#ffeda0", "#fed976",
     "#feb24c", "#fd8d3c", "#fc4e2a", "#e31a1c", "#bd0026", "#800026", "#800026"
@@ -47,4 +44,8 @@ eval_ppEffect <- function(object, ppDEGs, group.by = "seurat_clusters", marker_g
   input_file <- system.file("rmd", "test.Rmd", package = "ppEffect")
 
   rmarkdown::render(input = input_file, output_file = report_dir, encoding = "UTF-8")
+
+  object$ppDEGs1 <- NULL
+  return(object)
+
 }

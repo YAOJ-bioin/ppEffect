@@ -145,12 +145,15 @@ This step may cost several minutes, and a ***ppEffect Report*** will be
 produced.
 
 ``` r
-eval_ppEffect(
+data_obj <- eval_ppEffect(
   object = data_obj,
   ppDEGs = ppDEGs,
   marker_genes = Markers,
   report_dir = "./ppEffect_eval_report-example.html"
 )
+
+# Result of pp.Score were stored here.
+data_obj$ppDEGs
 ```
 
 An example report can be obtained here:
