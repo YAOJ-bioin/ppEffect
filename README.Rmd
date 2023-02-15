@@ -138,7 +138,9 @@ ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01")
 # Extract genes directly:
 ppDEGs <- ppDEGs$gene_name
 
-## Or, you can filter the genes by the parameter: log2FoldChange or pvalue.
+## Or, you can filter the genes by the parameter: log2FoldChange, baseMean or pvalue.
+### baseMean: mean of normalized counts for all samples.
+
 ## For example:
 ppDEGs <- ppDEGs %>% filter(log2FoldChange >=2, pvalue<0.05)
 ```
