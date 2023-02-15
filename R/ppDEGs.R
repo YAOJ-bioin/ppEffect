@@ -51,7 +51,7 @@ Information <- function(x){
   cat("sample:", x$sample,"\n")
   cat("treatment:", x$treatment,"\n")
   cat("ref:", x$ref,"\n")
-  cat("ppDEGs: total", length(x$genes),"genes in this dataset, E.g", x$genes[1:2],"\n")
+  cat("ppDEGs: total", length(x$genes$gene_name),"genes in this dataset, E.g", x$genes$gene_name[1:2],"\n")
   cat("\n")
   cat("*************************\n")
 }

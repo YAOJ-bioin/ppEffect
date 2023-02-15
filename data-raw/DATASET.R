@@ -11,7 +11,7 @@ At_root_Denyer_2019 <- ppDEGs(
   sample ="root",
   treatment = "6-day-old; 120mins",
   ref = "Denyer et al., 2019",
-  genes = read.csv("../data_dir/At_root_GSE123818_ppDEGs.txt",sep = "\t")[["gene_name"]]
+  genes = read.csv("../data_dir/At_root_GSE123818_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
 )
 
 
@@ -22,7 +22,7 @@ At_leaf_Kim_2021 <- ppDEGs(
   sample ="leaf",
   treatment = "6-weeks-old; 120mins",
   ref = "Kim et al., 2021",
-  genes = read.csv("../data_dir/At_leaf_GSE161411_ppDEGs.txt",sep = "\t")[["gene_name"]]
+  genes = read.csv("../data_dir/At_leaf_GSE161411_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
 )
 
 
@@ -33,7 +33,7 @@ Zm_ear_Xu_2021 <- ppDEGs(
   sample ="ear",
   treatment = "45mins",
   ref = "Xu et al., 2021",
-  genes = read.csv("../data_dir/Zm_ear_PRJNA647196_ppDEGs.txt",sep = "\t")%>% rownames()
+  genes = read.csv("../data_dir/Zm_ear_PRJNA647196_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
 )
 
 
@@ -44,7 +44,7 @@ Zm_leaf_Bezrutczyk_2021 <- ppDEGs(
   sample ="leaf",
   treatment = "V2-leaf; 210mins",
   ref = "Bezrutczyk et al., 2021",
-  genes = read.csv("../data_dir/Zm_leaf_GSE157758_ppDEGs.txt",sep = "\t")[["Gene"]]
+  genes = read.csv("../data_dir/Zm_leaf_GSE157758_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
 )
 
 
@@ -56,10 +56,12 @@ Os_root_Liu_2021 <- ppDEGs(
   sample ="root",
   treatment = "3-day-old; 150mins",
   ref = "Liu et al., 2021",
-  genes = read.csv("../data_dir/Os_CRA004082_mixed_ppDEGs.txt",sep = "\t")[["Gene"]]
+  genes = read.csv("../data_dir/Os_CRA004082_mixed_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
 )
 
-
+# Os_root_ppDEGs <- read.csv("../data_dir/Os_CRA004082_mixed_ppDEGs.txt",sep = "\t")
+# Os_root_ppDEGs <- rename(Os_root_ppDEGs,gene_name=Gene)
+# write.table(Os_root_ppDEGs,"../data_dir/Os_CRA004082_mixed_ppDEGs.txt",sep = "\t",quote = F,row.names = F)
 
 
 Nt_BY2_Yao_2023 <- ppDEGs(
@@ -69,8 +71,14 @@ Nt_BY2_Yao_2023 <- ppDEGs(
   sample ="BY-2 cell lines",
   treatment = "3-day-old; 120mins",
   ref = "unpublished",
-  genes = read.csv("../data_dir/Nt_BY2_ppDEGs.txt",sep = "\t")[["Gene"]]
+  genes = read.csv("../data_dir/Nt_BY2_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
 )
+
+
+# Nt_ppDEGs <- read.csv("../data_dir/Nt_BY2_ppDEGs.txt",sep = "\t")
+# Nt_ppDEGs <- rename(Nt_ppDEGs,gene_name=Gene)
+# write.table(Nt_ppDEGs,"../data_dir/Nt_BY2_ppDEGs.txt",sep = "\t",quote = F,row.names = F)
+
 
 ppDEGs_DB <- ppDEGs_DB(list(
   "01" = At_root_Denyer_2019,
@@ -88,7 +96,7 @@ Details(ppDEGs_DB, ID = "06")
 ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID = "01")
 
 ### 检查无误，我们应该把ppDEGs_DB打包放到包里面
-usethis::use_data(ppDEGs_DB)
+usethis::use_data(ppDEGs_DB,overwrite = T)
 
 
 

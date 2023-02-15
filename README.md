@@ -77,7 +77,7 @@ Markers <- FindAllMarkers(data_obj)
 Our package mainly contains three modules: Data, Evaluation, and Method.
 
 -   **Data** : A warehouse of ppDEGs from different species. We
-    collected totally XXX gene sets, from 6 species and xxx tissues or
+    collected totally 6 gene sets, from 4 species and 4 tissues or
     organs. All data can be easily obtained by using ***ppDEGs\_DB***.
 
 -   **Evaluation** : We bulit the function ***eval\_ppEffect*** to help
@@ -96,7 +96,7 @@ The overview of ppDEGs\_DB, you can choose dataset by ID.
 # Check the overview of ppDEGs_DB, and confirm which ppDEGs dataset your will choose.
 Overview(ppDEGs_DB)
 
-# *** Protoplasting induced gene sets (ppDEGs) from bulk RNA-seq analysis (log2FC=1)
+# *** Protoplasting induced gene sets (ppDEGs) from bulk RNA-seq analysis 
 # between protoplasted cells and un-protoplasted sample.*** 
 # 
 # ID  |      Dataset name 
@@ -134,9 +134,16 @@ Details(ppDEGs_DB, ID ="01")
 ppDEGs can be extracted by the function `ppDEGsExtra`.
 
 ``` r
-# select and extra  a vector about ppDEGs, by ID displayed .
+# select and extra  a data.frame about ppDEGs, by ID displayed .
 # Or you can provide your own ppDEGs.
 ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01")
+
+# Extract genes directly:
+ppDEGs <- ppDEGs$gene_name
+
+## Or, you can filter the genes by the parameter: log2FoldChange or pvalue.
+## For example:
+ppDEGs <- ppDEGs %>% filter(log2FoldChange >=2, pvalue<0.05)
 ```
 
 ### Module two: Evaluation
