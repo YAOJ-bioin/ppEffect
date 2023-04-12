@@ -6,7 +6,8 @@
 \usage{
 eval_ppEffect(
   object,
-  ppDEGs,
+  Up_ppDEGs,
+  Down_ppDEGs,
   group.by = "seurat_clusters",
   marker_genes,
   report_dir = "./ppEffect_report.html",
@@ -17,7 +18,10 @@ eval_ppEffect(
 \item{object}{A seruat object, which have been pre-processed
 (after normalization, dimension reduction, and marker gene identification).}
 
-\item{ppDEGs}{a vector of protoplasting induced genes.
+\item{Up_ppDEGs}{a vector of up-regulated protoplasting induced genes.
+You can obtain the dataset from ppDEGs_DB or input your own geneList.}
+
+\item{Down_ppDEGs}{a vector of down-regulated protoplasting induced genes.
 You can obtain the dataset from ppDEGs_DB or input your own geneList.}
 
 \item{group.by}{a slot to group cells. The default is "suerat_clusters".}
@@ -38,7 +42,8 @@ Evaluate ppEffect in scRNA-seq dataset
 \examples{
 # library(ppEffect)
 # eval_ppEffect(  object = data_obj,
-#                 ppDEGs = ppDEGs,
+#                 Up_ppDEGs = Up_ppDEGs,
+#                 Down_ppDEGs= Down_ppDEGs,
 #                 marker_genes = Markers,
 #                 report_dir = "./ppEffect_eval_report-example.html")
 

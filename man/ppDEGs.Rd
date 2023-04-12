@@ -4,7 +4,7 @@
 \alias{ppDEGs}
 \title{Define a S3 object in class of ppDEGs to store each dataset}
 \usage{
-ppDEGs(ID, name, species, sample, treatment, ref, genes)
+ppDEGs(ID, name, species, sample, treatment, ref, Up_ppDEGs, Down_ppDEGs)
 }
 \arguments{
 \item{ID}{ID number of the dataset}
@@ -19,7 +19,9 @@ ppDEGs(ID, name, species, sample, treatment, ref, genes)
 
 \item{ref}{DOI of the ref.}
 
-\item{genes}{a vector of ppDEGs}
+\item{Up_ppDEGs}{a vector of ppDEGs}
+
+\item{Down_ppDEGs}{a vector of ppDEGs}
 }
 \description{
 Define a S3 object in class of ppDEGs to store each dataset

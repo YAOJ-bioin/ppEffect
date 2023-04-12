@@ -32,7 +32,7 @@ ppDEGs_DB <- function(ppDEGs){
 #'
 #' @examples
 Overview <- function(x){
-  cat("*** Protoplasting induced gene sets (ppDEGs) from bulk RNA-seq analysis (log2FC=1)
+  cat("*** Protoplasting induced gene sets (ppDEGs) from bulk RNA-seq analysis (log2FC>=2 or log2FC<=2)
 between protoplasted cells and un-protoplasted sample.*** \n")
   cat("\n")
   cat("ID  |     ", "Dataset name \n")
@@ -72,11 +72,16 @@ Details <- function(x,ID){
 #'
 #' @param x a object in ppDEGs_DB class
 #' @param ID ID of the dataset you interested, E.g "01"
-#'
+#' @param type your can choose ppDEGs type from "Up_ppDEGs" or "Down_ppDEGs"
 #' @example
 #' # ppDEGsExtra(ppDEGs_DB_example,ID ="01")
-ppDEGsExtra <- function(x,ID){
-  x$dataset[[ID]]$gene
+ppDEGsExtra <- function(x,ID,type="Up_ppDEGs"){
+  if (type=="Up_ppDEGs"){
+    x$dataset[[ID]]$Up_ppDEGs
+  }
+  else if (type =="Down_ppDEGs"){
+    x$dataset[[ID]]$Down_ppDEGs
+  }
 }
 
 

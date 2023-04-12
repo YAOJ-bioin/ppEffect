@@ -3,6 +3,8 @@
 usethis::use_data(DATASET, overwrite = TRUE)
 
 #### prepare ppDEGs_DB
+dataset <- read.csv("../data_dir/At_root_GSE123818_up_ppDEGs_log2fc2_padj0.05.txt",sep = "\t")
+
 
 At_root_Denyer_2019 <- ppDEGs(
   ID ="01",
@@ -11,7 +13,8 @@ At_root_Denyer_2019 <- ppDEGs(
   sample ="root",
   treatment = "6-day-old; 120mins",
   ref = "Denyer et al., 2019",
-  genes = read.csv("../data_dir/At_root_GSE123818_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
+  Up_ppDEGs = read.csv("../data_dir/At_root_GSE123818_up_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean),
+  Down_ppDEGs = read.csv("../data_dir/At_root_GSE123818_Down_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean)
 )
 
 
@@ -22,7 +25,8 @@ At_leaf_Kim_2021 <- ppDEGs(
   sample ="leaf",
   treatment = "6-weeks-old; 120mins",
   ref = "Kim et al., 2021",
-  genes = read.csv("../data_dir/At_leaf_GSE161411_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
+  Up_ppDEGs = read.csv("../data_dir/At_leaf_GSE161411_up_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean),
+  Down_ppDEGs = read.csv("../data_dir/At_leaf_GSE161411_down_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean)
 )
 
 
@@ -33,7 +37,8 @@ Zm_ear_Xu_2021 <- ppDEGs(
   sample ="ear",
   treatment = "45mins",
   ref = "Xu et al., 2021",
-  genes = read.csv("../data_dir/Zm_ear_PRJNA647196_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
+  Up_ppDEGs = read.csv("../data_dir/Zm_ear_PRJNA647196_up_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean),
+  Down_ppDEGs = read.csv("../data_dir/Zm_ear_PRJNA647196_down_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean)
 )
 
 
@@ -44,19 +49,21 @@ Zm_leaf_Bezrutczyk_2021 <- ppDEGs(
   sample ="leaf",
   treatment = "V2-leaf; 210mins",
   ref = "Bezrutczyk et al., 2021",
-  genes = read.csv("../data_dir/Zm_leaf_GSE157758_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
+  Up_ppDEGs = read.csv("../data_dir/Zm_leaf_GSE157758_up_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean),
+  Down_ppDEGs = read.csv("../data_dir/Zm_leaf_GSE157758_down_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean)
 )
 
 
 
-Os_root_Liu_2021 <- ppDEGs(
+Os_root_Wang_2021 <- ppDEGs(
   ID ="05",
-  name ="Os_root_Liu_2021",
+  name ="Os_root_Wang_2021",
   species = "Oryza sativa",
   sample ="root",
   treatment = "3-day-old; 150mins",
-  ref = "Liu et al., 2021",
-  genes = read.csv("../data_dir/Os_CRA004082_mixed_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
+  ref = "Wang et al., 2021",
+  Up_ppDEGs = read.csv("../data_dir/Os_mixed_CRA004082_up_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean),
+  Down_ppDEGs = read.csv("../data_dir/Os_mixed_CRA004082_down_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean)
 )
 
 # Os_root_ppDEGs <- read.csv("../data_dir/Os_CRA004082_mixed_ppDEGs.txt",sep = "\t")
@@ -71,7 +78,9 @@ Nt_BY2_Yao_2023 <- ppDEGs(
   sample ="BY-2 cell lines",
   treatment = "3-day-old; 120mins",
   ref = "unpublished",
-  genes = read.csv("../data_dir/Nt_BY2_ppDEGs.txt",sep = "\t") %>% select(gene_name, log2FoldChange,pvalue,baseMean)
+  Up_ppDEGs = read.csv("../data_dir/Nt_BY2_up_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean),
+  Down_ppDEGs = read.csv("../data_dir/Nt_BY2_down_ppDEGs_log2fc2_padj0.05.txt",sep = "\t") %>% select(Gene, log2FoldChange,pvalue,padj,baseMean)
+
 )
 
 
@@ -85,15 +94,23 @@ ppDEGs_DB <- ppDEGs_DB(list(
   "02" = At_leaf_Kim_2021,
   "03" = Zm_ear_Xu_2021,
   "04" = Zm_leaf_Bezrutczyk_2021,
-  "05" = Os_root_Liu_2021,
+  "05" = Os_root_Wang_2021,
   "06" = Nt_BY2_Yao_2023
 ))
 
 Overview(ppDEGs_DB)
 
+Details(ppDEGs_DB, ID = "01")
+Details(ppDEGs_DB, ID = "02")
+Details(ppDEGs_DB, ID = "03")
+Details(ppDEGs_DB, ID = "04")
+Details(ppDEGs_DB, ID = "05")
 Details(ppDEGs_DB, ID = "06")
 
 ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID = "01")
+
+
+
 
 ### 检查无误，我们应该把ppDEGs_DB打包放到包里面
 usethis::use_data(ppDEGs_DB,overwrite = T)
@@ -103,7 +120,8 @@ usethis::use_data(ppDEGs_DB,overwrite = T)
 
 
 ### prepare example dataset (Too big, we can not put it into package)
-
+library(Seurat)
+library(ppEffect)
 data_obj <- readRDS("../data_dir/GSE123818_at_root_anno_simple.rds")
 data_obj <- SCTransform(data_obj, verbose = FALSE)
 
@@ -112,16 +130,22 @@ data_obj <- RunUMAP(data_obj, dims = 1:10)
 data_obj <- RunTSNE(data_obj, dims = 1:10)
 data_obj <- FindNeighbors(data_obj, reduction = "pca",dims = 1:10)
 data_obj <- FindClusters(data_obj,resolution =0.8)
+data_obj <- readRDS("../data_dir/GSE123818_at_root_anno_pre-processed-ppEffected.rds")
 
 Markers <- FindAllMarkers(data_obj,logfc.threshold = 2)
 
-ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01")
+Up_ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01",type = "Up_ppDEGs")
+
+Down_ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01",type = "Down_ppDEGs")
+
 
 eval_ppEffect(
   object = data_obj,
-  ppDEGs = ppDEGs,
+  #Up_ppDEGs = Up_ppDEGs$Gene,
+  Up_ppDEGs = Up_ppDEGs,
+  Down_ppDEGs = Down_ppDEGs$Gene,
   marker_genes = Markers,
-  report_dir = "F:/Learn_Create_R_package/ppEffect_eval_report-At_root_Denyer_2019.html"
+  report_dir = "F:/Learn_Create_R_package/ppEffect_eval_report-At_root_Denyer_2019_V2.html"
 )
 
 getwd()

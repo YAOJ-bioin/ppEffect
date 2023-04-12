@@ -38,6 +38,7 @@ library(dplyr)
 library(cowplot)
 library(plotly)
 library(ggvenn)
+library(RColorBrewer)
 ```
 
 ### Load your scRNA dataset
@@ -112,7 +113,7 @@ Here, you can use `Details` to check the specific informations for each
 dataset. Input the ID number as a parameter. The basic information
 includes dataset’s ID, name, species, sample type, experiment
 treatment,reference, and ppDEGs. All gene set have been pre-processed,
-using the threshold as `log2FC>=2` and `p_adj=0.05`
+using the threshold as `log2FC>=2` and `p_adj<=0.05`
 
 ``` r
 # Show details about the specific dataset, your can choose it by ID
@@ -126,7 +127,8 @@ Details(ppDEGs_DB, ID ="01")
 # sample: root 
 # treatment: 6-day-old; 120mins 
 # ref: Denyer et al., 2019 
-# ppDEGs: total 3678 genes in this dataset, E.g AT1G01060 AT1G01140 
+# ppDEGs: total 3435 genes in this dataset, E.g AT5G62520 AT2G24850 ; 
+#         among then, 917 genes were up-regulated, and 2518 were down-regulated. 
 # 
 # *************************
 ```
@@ -136,16 +138,18 @@ ppDEGs can be extracted by the function `ppDEGsExtra`.
 ``` r
 # select and extra  a data.frame about ppDEGs, by ID displayed .
 # Or you can provide your own ppDEGs.
-ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01")
-
+UP_ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01", type = "Up_ppDEGs") # up-regulated genes
+Down_ppDEGs <- ppDEGsExtra(ppDEGs_DB, ID ="01", type = "Down_ppDEGs") # down-related genes
 # Extract genes directly:
-ppDEGs <- ppDEGs$gene_name
+UP_ppDEGs <- UP_ppDEGs$Gene
+Down_ppDEGs <- Down_ppDEGs$Gene
 
-## Or, you can filter the genes by the parameter: log2FoldChange, baseMean or pvalue.
+
+## Or, you can filter the genes by the parameter: log2FoldChange, baseMean, p_adj, or pvalue.
 ### baseMean: mean of normalized counts for all samples.
 
 ## For example:
-ppDEGs <- ppDEGs %>% filter(log2FoldChange >=2, pvalue<0.05)
+ppDEGs <- UP_ppDEGs %>% filter(log2FoldChange >=3, pvalue<0.05)
 ```
 
 ### Module two: Evaluation
@@ -156,7 +160,8 @@ produced.
 ``` r
 data_obj <- eval_ppEffect(
   object = data_obj,
-  ppDEGs = ppDEGs,
+  Up_ppDEGs = Up_ppDEGs,
+  Down_ppDEGs = Down_ppDEGs,
   marker_genes = Markers,
   report_dir = "/home/your absolute output path/ppEffect_eval_report-example.html"
 )
@@ -166,13 +171,13 @@ data_obj$ppDEGs
 ```
 
 An example report can be obtained here:
-[ppEffect\_eval\_report-example](./man/ppEffect_eval_report-example.html)
+[ppEffect\_eval\_report-example](./man/ppEffect_eval_report-At_root_Denyer_2019_V2.html)
 (Maybe github can’t show files that are this big right now. Please
 download the file to open it.)
 
 ![](man/figures/README_ppEffect_Report_example.png "ppEffect Report")
 
-![](man/figures/README_ppEffect_Report_example_2.png "ppEffect Report 2")
+![](man/figures/README_ppEffect_Report_example_2-2.png "ppEffect Report 2")
 
 ### Module three: Method
 

@@ -94,6 +94,7 @@ if (length(VariableFeatures(object = object))<=100){
 In this panel, your can see the distribution of ppEffects in each cells by UMAP plot. The darker the cell color, the more severely it is affected by enzymatic hydrolysis
 
 
+
 ```{r tsne, echo=F, fig.height=10, fig.width=12, warning=F, dev='svg'}
 plot1 <- Seurat::FeaturePlot(object = object, features = "ppDEGs",cols =featurePlotCols,pt.size = 0.8 )
 plot2 <- Seurat::DimPlot(object= object, group.by = group.by, cols = selCols,reduction = "umap",pt.size = 0.8 )
@@ -102,6 +103,8 @@ plot4 <- Seurat::DimPlot(object= object, group.by = group.by, cols = selCols,red
 
 cowplot::plot_grid(plot1, plot2 ,plot3,plot4 ,ncol = 2)
 ```
+
+
 
 # Groups affected by ppEffect 
 

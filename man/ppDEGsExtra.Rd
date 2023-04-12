@@ -4,12 +4,14 @@
 \alias{ppDEGsExtra}
 \title{Extra ppDEGs}
 \usage{
-ppDEGsExtra(x, ID)
+ppDEGsExtra(x, ID, type = "Up_ppDEGs")
 }
 \arguments{
 \item{x}{a object in ppDEGs_DB class}
 
 \item{ID}{ID of the dataset you interested, E.g "01"}
+
+\item{type}{your can choose ppDEGs type from "Up_ppDEGs" or "Down_ppDEGs"}
 }
 \description{
 Extra ppDEGs

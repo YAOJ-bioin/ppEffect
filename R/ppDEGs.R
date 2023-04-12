@@ -6,7 +6,8 @@
 #' @param sample Tissue or Organs of the sample
 #' @param treatment Time,temperature, and othe protoplasting conditions
 #' @param ref DOI of the ref.
-#' @param genes a vector of ppDEGs
+#' @param Up_ppDEGs a vector of ppDEGs
+#' @param Down_ppDEGs a vector of ppDEGs
 #'
 #' @return
 #' @export
@@ -20,14 +21,15 @@
 #'  #              ref = "DOI:001",
 #'  #              genes = c("ATgene1","ATgene2","ATgene3"))
 #'
-ppDEGs <- function(ID,name, species, sample, treatment, ref, genes){
+ppDEGs <- function(ID,name, species, sample, treatment, ref, Up_ppDEGs,Down_ppDEGs){
   structure( list(ID = ID,
                   name =name,
                   species=species,
                   sample = sample,
                   treatment = treatment,
                   ref =ref,
-                  genes = genes),
+                  Up_ppDEGs = Up_ppDEGs,
+                  Down_ppDEGs = Down_ppDEGs),
              class="ppDEGs")
 }
 
@@ -51,7 +53,9 @@ Information <- function(x){
   cat("sample:", x$sample,"\n")
   cat("treatment:", x$treatment,"\n")
   cat("ref:", x$ref,"\n")
-  cat("ppDEGs: total", length(x$genes$gene_name),"genes in this dataset, E.g", x$genes$gene_name[1:2],"\n")
+  cat("ppDEGs: total", length(x$Up_ppDEGs$Gene)+length(x$Down_ppDEGs$Gene),"genes in this dataset, E.g", x$Up_ppDEGs$Gene[1:2],"; \n",
+      "       among then,", length(x$Up_ppDEGs$Gene),"genes were up-regulated, and",length(x$Down_ppDEGs$Gene), "were down-regulated. \n"
+      )
   cat("\n")
   cat("*************************\n")
 }
